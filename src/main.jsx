@@ -16,8 +16,8 @@ import ProductProvider from './Context/ProductContext.jsx'
 
 import Signup from './pages/SignUp.jsx'
 
-import Login from './pages/login.jsx'
 import SingleProduct from './pages/SingleProduct.jsx'
+import Login from './pages/login.jsx'
 
 
 const router =createBrowserRouter ([{

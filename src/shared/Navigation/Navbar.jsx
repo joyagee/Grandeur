@@ -60,7 +60,7 @@ const Navbar = () => {
            <div className=" flex items-center justify-center">
              <img
               className="h-[70px] "
-              src="/public/final-removebg-preview.png"
+              src="/images/final-removebg-preview.png"
             />
            </div>
           </Link>

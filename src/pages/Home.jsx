@@ -31,7 +31,8 @@ import { FaArrowCircleRight, FaHeart, FaShoppingCart } from "react-icons/fa";
 
 import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../Context/ProductContext";
-import Layout from "../Shared/Layout/Layout";
+import Layout from "../shared/Navigation/Layout";
+
 
 const Home = () => {
   const { HandleGetProducts, productData, HandleAddTCart } = useContext(ProductContext);
@@ -47,7 +48,7 @@ const Home = () => {
     if (!productData) {
       HandleGetProducts();
     }
-  }, [productData]);
+  }, [productData, HandleGetProducts]);
 
   useEffect(() => {
     console.log("productData:", productData);

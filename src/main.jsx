@@ -13,10 +13,7 @@ import NewArrivals from "./pages/NewArrivals.jsx";
 import Cart from "./pages/Cart.jsx";
 import ProductProvider from "./Context/ProductContext.jsx";
 
-
-
 import SingleProduct from "./pages/SingleProduct.jsx";
-
 
 const router = createBrowserRouter([
   {
@@ -57,15 +54,9 @@ const router = createBrowserRouter([
         path: "/childrencloths",
       },
 
-     
       {
         element: <SingleProduct />,
         path: "/product/:id",
-      },
-
-      {
-        element: <Login />,
-        path: "/login",
       },
     ],
   },

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Input from "./input";
-import Layout from "../Shared/Layout/Layout";
+import Layout from "../shared/Navigation/Layout";
+
 
 
 

@@ -6,7 +6,8 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import { Link } from "react-router-dom";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
-import Layout from "../Shared/Layout/Layout";
+import Layout from "../shared/Navigation/Layout";
+
 
 const ChildrenCloths = () => {
   const { HandleGetProducts, productData ,HandleAddTCart} = useContext(ProductContext);

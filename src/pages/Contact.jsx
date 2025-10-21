@@ -2,7 +2,8 @@ import React from "react";
 
 
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
-import Layout from "../Shared/Layout/Layout";
+import Layout from "../shared/Navigation/Layout";
+
 
 const Contact = () => {
   return (

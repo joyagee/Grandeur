@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { ProductContext } from "../Context/ProductContext";
-import Layout from "../Shared/Layout/Layout";
+import Layout from "../shared/Navigation/Layout";
+
 // import Layout from "../Shared/Layout/Layout";
 
 

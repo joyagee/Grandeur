@@ -2,7 +2,8 @@ import React from "react";
 
 
 import { FaLeaf, FaGem, FaHeart, FaUsers } from "react-icons/fa";
-import Layout from "../Shared/Layout/Layout";
+import Layout from "../shared/Navigation/Layout";
+
 
 const About = () => {
   return (

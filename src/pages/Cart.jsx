@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 
 import { ProductContext } from "../Context/ProductContext";
-import Layout from "../Shared/Layout/Layout";
+
 import { RiDeleteBin3Fill, RiEditCircleFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 import { ImCancelCircle } from "react-icons/im";
 import Edit from "../Components/SingleProductComponents/Edit";
+import Layout from "../shared/Navigation/Layout";
 
 const Cart = () => {
   // Delete item from cart

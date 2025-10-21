@@ -4,7 +4,7 @@ import Layout from "../Shared/Layout/Layout";
 
 
 
-export default function Login() {
+const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
 
   const handleChange = (e) => {
@@ -15,10 +15,9 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Login form submitted:", formData);
-    // Here you can call your API or authentication function
-  };
-
-  return (
+     // Here you can call your API or authentication function
+ };
+  return ( 
   <Layout>
      <div className="flex items-center justify-center min-h-screen bg-primary">
       <form
@@ -53,6 +52,9 @@ export default function Login() {
         </button>
       </form>
     </div>
-  </Layout>
-  );
+  </Layout> );
 }
+ 
+export default Login;
+
+  

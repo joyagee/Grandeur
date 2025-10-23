@@ -1,6 +1,6 @@
 import React from "react";
 
-
+import {motion} from "framer-motion" ;
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import Layout from "../shared/Navigation/Layout";
 

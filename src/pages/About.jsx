@@ -3,6 +3,7 @@ import React from "react";
 
 import { FaLeaf, FaGem, FaHeart, FaUsers } from "react-icons/fa";
 import Layout from "../shared/Navigation/Layout";
+import {motion} from "framer-motion" ;
 
 
 const About = () => {
@@ -11,14 +12,14 @@ const About = () => {
       <div className="bg-white text-gray-800 min-h-screen flex flex-col">
         {/* Hero Section */}
         <section className="relative bg-primary text-white py-24 px-6 text-center">
-          <motion.h1
+          <motion.h
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             className="text-5xl md:text-6xl font-extrabold mb-4"
           >
             About <span className="text-yellow-300"> Granduer Fashion</span>
-          </motion.h1>
+          </motion.h>
           <motion.p
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}

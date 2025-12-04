@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify'
 
 
 
-export const baseUrl = "https://grandeur-5roe.onrender.com/";
+export const baseUrl = "https://ecombackend-d0na.onrender.com/";
 function App() {
 
 

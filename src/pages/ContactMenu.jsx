@@ -20,18 +20,18 @@ export default function ContactMenu() {
       {/* Dropdown Menu */}
       {open && (
         <div className="absolute md:right-auto hover:text-black sm:right-auto right-0  hover:bg-white mt-2 w-48 bg-primary rounded-lg shadow-lg overflow-hidden border border-gray-200 z-10">
-          <Link
-            to="/login"
-            className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
-          >
-            <LogIn size={18} /> Login
-          </Link>
-          <Link
-            to="/signup"
-            className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
-          >
-            <UserPlus size={18} /> Sign Up
-          </Link>
+       <Link
+  to="/auth?mode=login"
+  className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
+>
+  <LogIn size={18} /> Login
+</Link>
+         <Link
+  to="/auth?mode=signup"
+  className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
+>
+  <UserPlus size={18} /> Sign Up
+</Link>
           <Link
             to="/contact"
             className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"

@@ -2,6 +2,9 @@ import { Outlet } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
 
+
+
+export const baseUrl = "https://ecombackend-d0na.onrender.com/";
 function App() {
 
 

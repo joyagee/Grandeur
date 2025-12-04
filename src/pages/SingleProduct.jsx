@@ -162,7 +162,7 @@ function SingleProduct() {
           {/* Buttons */}
           <div className="flex gap-4 mt-6">
             <button
-              className="flex-1 bg-yellow-800 text-white py-3 rounded-lg hover:bg-teal-600 transition"
+              className="flex-1 bg-yellow-800 text-white py-3 rounded-lg cursor-pointer hover:bg-teal-600 transition"
               onClick={() => {
                 console.log("prdd", product);
                 console.log("selsiz", selectedSize);

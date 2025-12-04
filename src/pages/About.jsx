@@ -1,10 +1,8 @@
 import React from "react";
 
-
 import { FaLeaf, FaGem, FaHeart, FaUsers } from "react-icons/fa";
 import Layout from "../shared/Navigation/Layout";
-import {motion} from "framer-motion" ;
-
+import { motion } from "framer-motion";
 
 const About = () => {
   return (
@@ -15,7 +13,7 @@ const About = () => {
           <motion.h
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 6 }}
             className="text-5xl md:text-6xl font-extrabold mb-4"
           >
             About <span className="text-yellow-300"> Granduer Fashion</span>
@@ -23,11 +21,12 @@ const About = () => {
           <motion.p
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2 }}
+            transition={{ duration: 5 }}
             className="max-w-3xl mx-auto text-lg md:text-xl text-gray-200"
           >
             Where passion meets creativity — redefining African-inspired fashion
-            with a modern global twist. We’re not just a brand; we’re a movement.
+            with a modern global twist. We’re not just a brand; we’re a
+            movement.
           </motion.p>
         </section>
 
@@ -139,7 +138,7 @@ const About = () => {
               Our Community
             </motion.h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-             Granduer is more than just fashion — it’s a community. From local
+              Granduer is more than just fashion — it’s a community. From local
               artisans and designers to global customers, every voice shapes our
               identity. Together, we redefine what it means to look good, feel
               good, and do good.
@@ -166,9 +165,9 @@ const About = () => {
             Be part of a fashion revolution that celebrates identity, culture,
             and creativity. Step into a world where style meets meaning.
           </p>
-         
+
           <a
-            href="/shop"
+            href="/newarrivals"
             className="inline-block bg-primary text-white px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-all"
           >
             Explore Our Collection

@@ -14,6 +14,10 @@ import Cart from "./pages/Cart.jsx";
 import ProductProvider from "./Context/ProductContext.jsx";
 
 import SingleProduct from "./pages/SingleProduct.jsx";
+import Auth from "./pages/Auth.jsx";
+import VerifyPayment from "./pages/VerifyPayment.jsx";
+import ThankYouPaymentPage from "./pages/ThankYouPage.jsx";
+
 
 const router = createBrowserRouter([
   {
@@ -24,6 +28,12 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
+
+      {
+        element: <Auth />,
+        path: "/auth",
+      },
+
       {
         element: <About />,
         path: "/about",
@@ -58,6 +68,16 @@ const router = createBrowserRouter([
         element: <SingleProduct />,
         path: "/product/:id",
       },
+
+      {
+        element: <VerifyPayment />,
+        path: "/verify-payment",
+      },
+      {
+        element: <ThankYouPaymentPage />,
+        path: "thankyoupaymentpage",
+      },
+
     ],
   },
 ]);

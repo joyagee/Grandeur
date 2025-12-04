@@ -73,13 +73,13 @@ const MenCloths = () => {
             {menProducts &&
               menProducts.map((product) => (
                 <SwiperSlide
-                  key={product.id}
+                  key={product?.id}
                   className="flex justify-center items-center md:w-full w-1/2 mt-10 rounded-t-[50%] overflow-hidden"
                 >
-                  <Link to={`/product/${product.id}`} className="w-full h-full">
+                  <Link to={`/product/${product?.id}`} className="w-full h-full">
                     <img
-                      src={product.image}
-                      alt={product.name}
+                      src={product?.image}
+                      alt={product?.name}
                       className="object-cover w-full h-full"
                     />
                   </Link>
@@ -100,25 +100,25 @@ const MenCloths = () => {
           <div className="px-4 md:px-10 lg:px-20 grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-x-8 md:gap-y-16 gap-16 justify-center items-stretch lg:mt-6 mt-8">
             {(fewDisplay ? few : menProducts)?.map((item) => (
               <div
-                key={item.id}
+                key={item?.id}
                 className="hover:shadow-2xl transition ease-in-out duration-500 rounded-md overflow-hidden"
               >
                 <div className="w-full h-[26rem] overflow-hidden">
-                  <Link to={`/product/${item.id}`} className="w-full h-full">
+                  <Link to={`/product/${item?.id}`} className="w-full h-full">
                     <img
-                      src={item.image}
-                      alt={item.name}
+                      src={item?.image}
+                      alt={item?.name}
                       className="object-cover w-full h-full"
                     />
                   </Link>
                 </div>
                 <div className="p-2">
-                  <p className="text-black font-bold mt-2">{item.name}</p>
-                  <p className="text-black mt-2 z-50">{item.description}</p>
+                  <p className="text-black font-bold mt-2">{item?.name}</p>
+                  <p className="text-black mt-2 z-50">{item?.description}</p>
 
                   <div className="flex justify-between items-center mt-2">
                     <span className="p-2 bg-primary text-white rounded-md">
-                      ${item.price}
+                      ${item?.price}
                     </span>
 
                     <div className="flex justify-between items-center gap-4">

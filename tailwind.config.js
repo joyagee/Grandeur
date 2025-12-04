@@ -9,7 +9,8 @@ export default {
   theme: {
     extend: {
       colors:{
-       primary : "rgb(2,0,14)"
+       primary : "rgb(2,0,14)",
+       transwhite:"rgba(255, 255, 255, 0.6)"
       },
       fontFamily :{
         space :["Space Grotesk", "san-serif"],

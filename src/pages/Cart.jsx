@@ -125,20 +125,27 @@ const Cart = () => {
                   >
                     <td className="py-3 px-4 flex items-center gap-3">
                       <img
-                        src={item?.product?.image}
-                        alt={item?.product?.name}
+                        src={item?.image || item?.product?.image}
+                        alt={item?.name || item?.product?.name}
                         className="w-12 h-12 object-cover rounded-md"
                       />
-                      <span className="font-medium">{item?.product?.name}</span>
+                      <span className="font-medium">
+                        {item?.name || item?.product?.name}
+                      </span>
                     </td>
 
-                    <td className="py-3 px-4">${item?.product?.price}</td>
+                    <td className="py-3 px-4">
+                      ${item?.price || item?.product?.price}
+                    </td>
 
                     <td className="py-3 px-4">{item?.quantity}</td>
 
                     {/* FIXED ITEM TOTAL */}
                     <td className="py-3 px-4 font-semibold">
-                      ${(item?.product?.price * item?.quantity).toFixed(2)}
+                      $
+                      {(
+                        (item?.price || item?.product?.price) * item?.quantity
+                      ).toFixed(2)}
                     </td>
 
                     <td className="text-center flex justify-between gap-2">
@@ -178,25 +185,29 @@ const Cart = () => {
                 >
                   <div className="flex items-center gap-3">
                     <img
-                      src={item.product?.image}
-                      alt={item.product?.name}
+                      src={item?.image || item.product?.image}
+                      alt={item?.name || item.product?.name}
                       className="w-16 h-16 object-cover rounded-md"
                     />
                     <div>
                       <h3 className="font-semibold text-lg">
-                        {item.product?.name}
+                        {item?.name || item.product?.name}
                       </h3>
-                      <p className="text-gray-600">${item.product?.price}</p>
+                      <p className="text-gray-600">
+                        ${item?.price || item.product?.price}
+                      </p>
                     </div>
                   </div>
 
                   <div className="flex justify-between items-center mt-2 text-sm">
-                    <span>Quantity: {item?.quantity}</span>
+                    <span>Quantity: {item?.quantity || item?.quantity}</span>
 
                     {/* FIXED MOBILE TOTAL */}
                     <span className="font-semibold">
                       Total: $
-                      {(item?.product?.price * item?.quantity).toFixed(2)}
+                      {(
+                        (item?.price || item?.product?.price) * item?.quantity
+                      ).toFixed(2)}
                     </span>
                   </div>
 

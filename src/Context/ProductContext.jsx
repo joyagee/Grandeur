@@ -124,98 +124,98 @@ const ProductProvider = ({ children }) => {
   //     }
   //   }
   // };
-  
+
   // frontend product context
-const HandleAddTCart = async (
-  prod,
-  quantity = null,
-  size = null,
-  color = null
-) => {
-  if (!isAuthentified) {
-    // Get existing cart or initialize
-    let storedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+  const HandleAddTCart = async (
+    prod,
+    quantity = null,
+    size = null,
+    color = null
+  ) => {
+    if (!isAuthentified) {
+      // Get existing cart or initialize
+      let storedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 
-    // Find if products already exists in the cart
-    const existingItem = storedCartItems.find(
-      (item) => parseInt(item.id) === parseInt(prod.id)
-    );
-
-    let updatedCartItems;
-    if (existingItem) {
-      // Create a new array with updated quantity for the existing item
-      updatedCartItems = storedCartItems.map((item) =>
-        parseInt(item.id) === parseInt(prod.id)
-          ? { ...item, quantity: item.quantity + quantity }
-          : item
+      // Find if products already exists in the cart
+      const existingItem = storedCartItems.find(
+        (item) => parseInt(item.id) === parseInt(prod.id)
       );
-      toast.info("Product quantity updated in cart");
-    } else {
-      // Add a new product entry if it doesn't exist
-      updatedCartItems = [
-        ...storedCartItems,
-        { ...prod, quantity, size, color },
-      ];
-      toast.success("Product added to cart");
-    }
 
-    // Save updated cart in localStorage
-    localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
-    setCartItems(updatedCartItems);
-    console.log("Updated Cart:", updatedCartItems);
-  } else {
-    try {
-      console.log("User is authenticated - handle API cart instead");
-
-      // 🚨 CORRECTION: Safely derive and validate User ID
-      const userIdToSend = Number(User?.userid);
-
-      if (!User || isNaN(userIdToSend) || userIdToSend === 0) {
-        toast.error("Authentication error: Invalid User ID. Please log in again.");
-        console.error("Authenticated user ID check failed:", User);
-        return; // Stop the function if the ID is invalid
-      }
-      // ----------------------------------------------------
-
-      console.log("tok", token && token);
-      console.log("uId", userIdToSend);
-
-      const res = await fetch(`${baseUrl}addcart`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token && token}`,
-        },
-        body: JSON.stringify({
-          // Use the validated ID
-          userid: userIdToSend, 
-          productid: Number(prod?.id),
-          color,
-          size,
-          quantity,
-        }),
-      });
-      const data = await res.json();
-      console.log("data:", data);
-
-      if (res.ok) {
-        localStorage.setItem(
-          "cartItems",
-          JSON.stringify(data?.data?.ProducCart)
+      let updatedCartItems;
+      if (existingItem) {
+        // Create a new array with updated quantity for the existing item
+        updatedCartItems = storedCartItems.map((item) =>
+          parseInt(item.id) === parseInt(prod.id)
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
         );
-        setCartItems(data?.data?.ProducCart);
-        toast.success(data?.message);
+        toast.info("Product quantity updated in cart");
       } else {
-        toast.error(data?.message);
+        // Add a new product entry if it doesn't exist
+        updatedCartItems = [
+          ...storedCartItems,
+          { ...prod, quantity, size, color },
+        ];
+        toast.success("Product added to cart");
       }
-      console.log("addCartRes:", data);
-    } catch (error) {
-      console.log("error", error);
 
-      toast.success("Unable to add to cart, Please try again later!");
+      // Save updated cart in localStorage
+      localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+      setCartItems(updatedCartItems);
+      console.log("Updated Cart:", updatedCartItems);
+    } else {
+      try {
+        console.log("User is authenticated - handle API cart instead");
+
+        // 🚨 CORRECTION: Safely derive and validate User ID
+        const userIdToSend = Number(User?.userId);
+
+        if (!User || !userIdToSend) {
+          toast.error("Authentication error: Invalid User ID. Please log in again.");
+          console.error("Authenticated user ID check failed:", User);
+          return; // Stop the function if the ID is invalid
+        }
+        // ----------------------------------------------------
+
+        console.log("tok", token && token);
+        console.log("uId", userIdToSend);
+
+        const res = await fetch(`${baseUrl}addcart`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token && token}`,
+          },
+          body: JSON.stringify({
+            // Use the validated ID
+            userid: userIdToSend,
+            productid: Number(prod?.id),
+            color,
+            size,
+            quantity,
+          }),
+        });
+        const data = await res.json();
+        console.log("data:", data);
+
+        if (res.ok) {
+          localStorage.setItem(
+            "cartItems",
+            JSON.stringify(data?.data?.ProducCart)
+          );
+          setCartItems(data?.data?.ProducCart);
+          toast.success(data?.message);
+        } else {
+          toast.error(data?.message);
+        }
+        console.log("addCartRes:", data);
+      } catch (error) {
+        console.log("error", error);
+
+        toast.success("Unable to add to cart, Please try again later!");
+      }
     }
-  }
-};
+  };
   const HandleGetProducts = async () => {
     try {
       const res = await fetch(` ${baseUrl}getAllProduct`, {
@@ -265,7 +265,7 @@ const HandleAddTCart = async (
         setCartItems(updatedCartItems);
       } else {
         console.log("tok", token && token);
-        console.log("uid", Number(User && User?.userid));
+        console.log("uid", Number(User && User?.userId));
 
         const res = await fetch(`${baseUrl}deletecart`, {
           method: "DELETE",
@@ -274,7 +274,7 @@ const HandleAddTCart = async (
             Authorization: `Bearer ${token && token}`,
           },
           body: JSON.stringify({
-            userid: Number(User && User?.userid),
+            userid: Number(User && User?.userId),
             productid: Number(prod?.id),
           }),
         });
@@ -312,11 +312,11 @@ const HandleAddTCart = async (
         const updatedCartItems = storedCartItems.map((item) =>
           parseInt(item?.id) === parseInt(prod?.id)
             ? {
-                ...item,
-                size: prod?.size ?? item?.size,
-                quantity: prod?.quantity ?? item?.quantity,
-                color: prod?.color ?? item?.color,
-              }
+              ...item,
+              size: prod?.size ?? item?.size,
+              quantity: prod?.quantity ?? item?.quantity,
+              color: prod?.color ?? item?.color,
+            }
             : item
         );
 
@@ -326,7 +326,7 @@ const HandleAddTCart = async (
         console.log("Update......");
 
         console.log("tok", token && token);
-        console.log("uid", Number(User && User?.userid));
+        console.log("uid", Number(User && User?.userId));
 
         const res = await fetch(`${baseUrl}updatecart`, {
           method: "PATCH",
@@ -335,7 +335,7 @@ const HandleAddTCart = async (
             Authorization: `Bearer ${token && token}`,
           },
           body: JSON.stringify({
-            userid: Number(User && User?.userid),
+            userid: Number(User && User?.userId),
             productid: Number(prod?.id),
             color: prod?.color,
             size: prod?.size,

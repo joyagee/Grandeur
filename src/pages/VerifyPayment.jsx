@@ -4,7 +4,7 @@ import { baseUrl } from "../App";
 import { PulseLoader } from "react-spinners";
 import { ProductContext } from "../Context/ProductContext";
 import { toast } from "react-toastify";
-import { FaRegCircleCheck } from "react-icons/fa6"; // ✅ import added
+import { FaRegCircleCheck } from "react-icons/fa6";
 
 const VerifyPayment = () => {
   const [searchParams] = useSearchParams();
@@ -13,7 +13,7 @@ const VerifyPayment = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [reciptData, setReciptData] = useState(null);
 
-  const { token } = useContext(ProductContext);
+  const { token, setCartItems } = useContext(ProductContext);
   const transaction_id = searchParams.get("transaction_id");
 
   const HandleVerifyPayment = async () => {
@@ -33,6 +33,10 @@ const VerifyPayment = () => {
       if (res.ok) {
         setIsVerified(true);
         setReciptData(data.data);
+
+        // Clear cart after successful payment
+        setCartItems([]);
+        localStorage.setItem("cartItems", JSON.stringify([]));
 
         // Redirect to thank you page after 2 sec
         setTimeout(() => {
@@ -64,7 +68,7 @@ const VerifyPayment = () => {
       {isVerified && (
         <div className="flex flex-col items-center mt-20">
           <p className="text-3xl font-bold text-green-600">Payment SUCCESSFUL</p>
-          <FaRegCircleCheck className="text-green-600 text-6xl mt-4" /> {/* ✅ should now display */}
+          <FaRegCircleCheck className="text-green-600 text-6xl mt-4" />
         </div>
       )}
     </div>

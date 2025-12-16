@@ -37,11 +37,22 @@ export const loginUser = async (logData, userCart) => {
     const data = await res.json()
     console.log('dataii', data)
 
+    // Check if login was successful before processing token
+    if (!res.ok) {
+      return { ok: false, data }
+    }
+
     let token = res.headers.get('authorization') || data.token
     //remove Bearer
     if (token && token.startsWith('Bearer ')) {
       token = token.split(' ')[1]
     }
+
+    // Validate token exists
+    if (!token) {
+      return { ok: false, data, error: 'No token received from server' }
+    }
+
     console.log('token', token)
     const decoded = jwtDecode(token)
     console.log(decoded.userId)

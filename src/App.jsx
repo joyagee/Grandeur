@@ -10,16 +10,16 @@ function App() {
 
   return (
     <>
-    <ToastContainer
+      <ToastContainer
         position="top-right"
         autoClose={3000}
         hideProgressBar
         pauseOnHover
         theme="colored" // optional, adds nice look
       />
-    <Outlet/>
-      </>
-        
+      <Outlet />
+    </>
+
   )
 }
 

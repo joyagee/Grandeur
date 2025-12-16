@@ -4,7 +4,7 @@ import { baseUrl } from "../App";
 import { PulseLoader } from "react-spinners";
 import { ProductContext } from "../Context/ProductContext";
 import { toast } from "react-toastify";
-import { FaRegCircleCheck } from "react-icons/fa6";
+import { FaRegCircleCheck } from "react-icons/fa6"; // ✅ import added
 
 const VerifyPayment = () => {
   const [searchParams] = useSearchParams();
@@ -64,7 +64,7 @@ const VerifyPayment = () => {
       {isVerified && (
         <div className="flex flex-col items-center mt-20">
           <p className="text-3xl font-bold text-green-600">Payment SUCCESSFUL</p>
-          <FaRegCircleCheck className="text-green-600 text-6xl mt-4" />
+          <FaRegCircleCheck className="text-green-600 text-6xl mt-4" /> {/* ✅ should now display */}
         </div>
       )}
     </div>

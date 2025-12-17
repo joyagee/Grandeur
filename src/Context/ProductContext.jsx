@@ -212,6 +212,8 @@ const ProductProvider = ({ children }) => {
 
         const data = await res.json();
         if (res.ok) {
+          setCartItems(data?.data?.ProducCart);
+          localStorage.setItem("cartItems", JSON.stringify(data?.data?.ProducCart));
           toast.success(data?.message);
         } else {
           toast.error(data?.message);
@@ -276,6 +278,8 @@ const ProductProvider = ({ children }) => {
 
         const data = await res.json();
         if (res.ok) {
+          setCartItems(data?.data?.ProducCart);
+          localStorage.setItem("cartItems", JSON.stringify(data?.data?.ProducCart));
           toast.success(data?.message);
         } else {
           toast.error(data?.message);

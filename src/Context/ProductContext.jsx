@@ -198,14 +198,13 @@ const ProductProvider = ({ children }) => {
         console.log("tok", token && token);
         console.log("uid", Number(User && User?.userId));
 
-        const res = await fetch(`${baseUrl}deletecart`, {
+        const res = await fetch(`${baseUrl}deletecart/${Number(User?.userId)}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token && token}`,
           },
           body: JSON.stringify({
-            userid: Number(User && User?.userId),
             productid: Number(prod?.id),
           }),
         });

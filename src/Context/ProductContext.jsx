@@ -205,7 +205,7 @@ const ProductProvider = ({ children }) => {
             Authorization: `Bearer ${token && token}`,
           },
           body: JSON.stringify({
-            productid: Number(prod?.id),
+            productid: Number(prod?.productid || prod?.id),
           }),
         });
 

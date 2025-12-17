@@ -13,7 +13,7 @@ const VerifyPayment = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [reciptData, setReciptData] = useState(null);
 
-  const { token } = useContext(ProductContext);
+  const { token, setCartItems } = useContext(ProductContext);
   const transaction_id = searchParams.get("transaction_id");
 
   const HandleVerifyPayment = async () => {
@@ -33,6 +33,10 @@ const VerifyPayment = () => {
       if (res.ok) {
         setIsVerified(true);
         setReciptData(data.data);
+
+        // Clear cart after successful payment
+        localStorage.setItem("cartItems", JSON.stringify([]));
+        setCartItems([]);
 
         // Redirect to thank you page after 2 sec
         setTimeout(() => {

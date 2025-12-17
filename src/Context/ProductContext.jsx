@@ -84,7 +84,7 @@ const ProductProvider = ({ children }) => {
         return;
       }
 
-      if (!User || !User.userid) {
+      if (!User || !User.userId) {
         toast.error("User is not loaded yet");
         return;
       }
@@ -96,7 +96,7 @@ const ProductProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          userid: Number(User.userid),
+          userid: Number(User.userId),
           productid: Number(prod.id),
           color,
           size,
@@ -124,9 +124,9 @@ const ProductProvider = ({ children }) => {
 
   const HandleGetPurchased = async () => {
     try {
-      if (!User || !User.userid) return;
+      if (!User || !User.userId) return;
 
-      const res = await fetch(`${baseUrl}getPurchased/${User.userid}`, {
+      const res = await fetch(`${baseUrl}getPurchased/${User.userId}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`
@@ -196,7 +196,7 @@ const ProductProvider = ({ children }) => {
         setCartItems(updatedCartItems);
       } else {
         console.log("tok", token && token);
-        console.log("uid", Number(User && User?.userid));
+        console.log("uid", Number(User && User?.userId));
 
         const res = await fetch(`${baseUrl}deletecart`, {
           method: "DELETE",
@@ -205,7 +205,7 @@ const ProductProvider = ({ children }) => {
             Authorization: `Bearer ${token && token}`,
           },
           body: JSON.stringify({
-            userid: Number(User && User?.userid),
+            userid: Number(User && User?.userId),
             productid: Number(prod?.id),
           }),
         });
@@ -257,7 +257,7 @@ const ProductProvider = ({ children }) => {
         console.log("Update......");
 
         console.log("tok", token && token);
-        console.log("uid", Number(User && User?.userid));
+        console.log("uid", Number(User && User?.userId));
 
         const res = await fetch(`${baseUrl}updatecart`, {
           method: "PATCH",
@@ -266,7 +266,7 @@ const ProductProvider = ({ children }) => {
             Authorization: `Bearer ${token && token}`,
           },
           body: JSON.stringify({
-            userid: Number(User && User?.userid),
+            userid: Number(User && User?.userId),
             productid: Number(prod?.id),
             color: prod?.color,
             size: prod?.size,

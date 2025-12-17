@@ -83,9 +83,8 @@ const Cart = () => {
 
         {/* Modal */}
         <div
-          className={` ${
-            isModalOpen ? "" : "hidden"
-          } modal min-h-screen bg-transPrimary w-full absolute top-0`}
+          className={` ${isModalOpen ? "" : "hidden"
+            } modal min-h-screen bg-transPrimary w-full absolute top-0`}
         >
           <span
             onClick={() => setIsModalOpen(false)}
@@ -97,7 +96,9 @@ const Cart = () => {
           <Edit
             prod={prod}
             setSetectedSize={setSetectedSize}
+            selectedSize={selectedSize}
             setSelectedColor={setSelectedColor}
+            selectedColor={selectedColor}
             setQuantity={setQuantity}
             quantity={quantity}
           />
@@ -152,7 +153,13 @@ const Cart = () => {
                       <span
                         onClick={() => {
                           setIsModalOpen(true);
-                          setProd(item);
+                          // Extract product from nested structure if it exists
+                          const product = item?.product || item;
+                          setProd(product);
+                          // Initialize selected values from cart item
+                          setSetectedSize(item?.selectedsize || "");
+                          setSelectedColor(item?.selectedcolor || "");
+                          setQuantity(item?.quantity || 1);
                         }}
                         title="Edit"
                         className="bg-black text-white px-2 py-1 rounded-md hover:bg-gray-800 cursor-pointer"

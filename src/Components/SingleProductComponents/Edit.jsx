@@ -64,11 +64,10 @@ const Edit = ({
                       key={size}
                       onClick={() => setSelectedSize(size)}
                       className={`border rounded-md px-3 py-1 text-sm cursor-pointer transition-all 
-                      ${
-                        selectedSize === size
+                      ${selectedSize === size
                           ? "bg-black text-white border-black"
                           : "hover:bg-gray-100"
-                      }`}
+                        }`}
                     >
                       {size}
                     </button>
@@ -87,11 +86,10 @@ const Edit = ({
                       key={color}
                       onClick={() => setSelectedColor(color)}
                       className={`w-7 h-7 rounded-full border-2 cursor-pointer transition-all
-                      ${
-                        selectedColor === color
+                      ${selectedColor === color
                           ? "border-black scale-110"
                           : "border-gray-300 hover:scale-105"
-                      }`}
+                        }`}
                       style={{ backgroundColor: color }}
                       title={color}
                     ></button>
@@ -147,9 +145,9 @@ const Edit = ({
 
             {!isInCart ? (
               <button
-                onClick={(e)=>{
-                    e.preventDefault()
-                    HandleUpdateCart({id:prod?.id, quantity:prod?.quantity, size:prod?.size, color:prod?.color})
+                onClick={(e) => {
+                  e.preventDefault()
+                  HandleUpdateCart({ id: prod?.id, quantity: quantity, size: selectedSize, color: selectedColor })
                 }}
                 className="mt-4 w-full py-3 rounded-md transition-all font-medium bg-black hover:bg-gray-800 text-white"
               >

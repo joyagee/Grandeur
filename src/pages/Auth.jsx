@@ -15,7 +15,7 @@ const Auth = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [isForgetPass, setIsForgetPass] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { cartItems, setCartItems, setUser } = useContext(ProductContext);
+  const { cartItems, setCartItems, setUser, settoken, setisAuthentified } = useContext(ProductContext);
   const navigate = useNavigate();
 
   const [show, setShow] = useState(false);
@@ -85,7 +85,7 @@ const Auth = () => {
       //Login Logic
       setIsLoading(true);
       const res = await loginUser(logData, cartItems);
-      
+
 
       console.log("logrespo:", res?.data);
 
@@ -95,11 +95,13 @@ const Auth = () => {
         navigate("/");
         setCartItems([]);
         localStorage.setItem("token", res.token);
+        settoken(res.token);
         localStorage.setItem("cartItems", JSON.stringify([]));
         if (res.decoded) {
           localStorage.setItem("user", JSON.stringify(res?.decoded));
+          setUser(res?.decoded);
         }
-        setUser(res?.decoded);
+        setisAuthentified(true);
       } else {
         setIsLoading(false);
         toast.error(res?.data?.message || res.error);
@@ -122,21 +124,19 @@ const Auth = () => {
             <div className="flexRow w-full">
               <span
                 onClick={() => HandlLog()}
-                className={`w-1/2 p-4 cursor-pointer  ${
-                  isRegister
-                    ? "bg-white text-primary border-primary "
-                    : "bg-primary text-white "
-                }`}
+                className={`w-1/2 p-4 cursor-pointer  ${isRegister
+                  ? "bg-white text-primary border-primary "
+                  : "bg-primary text-white "
+                  }`}
               >
                 Login
               </span>
               <span
                 onClick={() => HandleReg()}
-                className={` cursor-pointer  w-1/2 p-4   ${
-                  isRegister
-                    ? "bg-primary text-white "
-                    : "bg-white text-primary "
-                }`}
+                className={` cursor-pointer  w-1/2 p-4   ${isRegister
+                  ? "bg-primary text-white "
+                  : "bg-white text-primary "
+                  }`}
               >
                 Register
               </span>

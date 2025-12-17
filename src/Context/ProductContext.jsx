@@ -5,7 +5,7 @@ import { baseUrl } from "../App";
 
 const ProductProvider = ({ children }) => {
   const [productData, setProductData] = useState(null);
-
+  const [purchasedItems, setPurchasedItems] = useState([]);
   const [isAuthentified, setisAuthentified] = useState(false);
 
   const [cartCount, setCartCount] = useState(0);
@@ -26,10 +26,11 @@ const ProductProvider = ({ children }) => {
   const getLocalData = (item, fallback) => {
     try {
       const result = JSON.parse(localStorage.getItem(item));
-      if (!item) return fallback;
+      if (!result) return fallback;
       return result;
     } catch (error) {
       console.log(error);
+      return fallback;
     }
   };
   const [User, setUser] = useState(getLocalData("user", {}));
@@ -45,81 +46,110 @@ const ProductProvider = ({ children }) => {
     console.log(token);
   }, [token]);
 
-  
- const HandleAddTCart = async (prod, quantity = null, size = null, color = null) => {
-  if (!isAuthentified) {
-    // LOCAL CART LOGIC
-    let storedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const existingItem = storedCartItems.find(
-      (item) => parseInt(item.id) === parseInt(prod.id)
-    );
 
-    let updatedCartItems;
 
-    if (existingItem) {
-      updatedCartItems = storedCartItems.map((item) =>
-        parseInt(item.id) === parseInt(prod.id)
-          ? { ...item, quantity: item.quantity + quantity }
-          : item
+  const HandleAddTCart = async (prod, quantity = null, size = null, color = null) => {
+    if (!isAuthentified) {
+      // LOCAL CART LOGIC
+      let storedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      const existingItem = storedCartItems.find(
+        (item) => parseInt(item.id) === parseInt(prod.id)
       );
-      toast.info("Product quantity updated in cart");
-    } else {
-      updatedCartItems = [...storedCartItems, { ...prod, quantity, size, color }];
-      toast.success("Product added to cart");
-    }
 
-    localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
-    setCartItems(updatedCartItems);
-    return;
-  }
+      let updatedCartItems;
 
-  // ---------- AUTHENTICATED USER ----------
-  try {
-    console.log("User is authenticated - API cart update");
+      if (existingItem) {
+        updatedCartItems = storedCartItems.map((item) =>
+          parseInt(item.id) === parseInt(prod.id)
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
+        toast.info("Product quantity updated in cart");
+      } else {
+        updatedCartItems = [...storedCartItems, { ...prod, quantity, size, color }];
+        toast.success("Product added to cart");
+      }
 
-    if (!token) {
-      toast.error("Session expired, please log in again");
+      localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+      setCartItems(updatedCartItems);
       return;
     }
 
-    if (!User || !User.userid) {
-      toast.error("User is not loaded yet");
-      return;
+    // ---------- AUTHENTICATED USER ----------
+    try {
+      console.log("User is authenticated - API cart update");
+
+      if (!token) {
+        toast.error("Session expired, please log in again");
+        return;
+      }
+
+      if (!User || !User.userid) {
+        toast.error("User is not loaded yet");
+        return;
+      }
+
+      const res = await fetch(`${baseUrl}addcart`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          userid: Number(User.userid),
+          productid: Number(prod.id),
+          color,
+          size,
+          quantity,
+        }),
+      });
+
+      const data = await res.json();
+      console.log("addCartRes:", data);
+
+      if (res.ok) {
+        setCartItems(data?.data?.ProducCart);
+        localStorage.setItem("cartItems", JSON.stringify(data?.data?.ProducCart));
+        toast.success(data?.message);
+      } else {
+        toast.error(data?.message);
+      }
+    } catch (error) {
+      console.log("error:", error);
+      toast.error("Unable to add to cart, please try again later!");
     }
+  };
 
-    const res = await fetch(`${baseUrl}addcart`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        userid: Number(User.userid),
-        productid: Number(prod.id),
-        color,
-        size,
-        quantity,
-      }),
-    });
 
-    const data = await res.json();
-    console.log("addCartRes:", data);
 
-    if (res.ok) {
-      setCartItems(data?.data?.ProducCart);
-      localStorage.setItem("cartItems", JSON.stringify(data?.data?.ProducCart));
-      toast.success(data?.message);
-    } else {
-      toast.error(data?.message);
+  const HandleGetPurchased = async () => {
+    try {
+      if (!User || !User.userid) return;
+
+      const res = await fetch(`${baseUrl}getPurchased/${User.userid}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setPurchasedItems(data.data);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error.message);
+      toast.error("Failed to load purchased items");
     }
-  } catch (error) {
-    console.log("error:", error);
-    toast.error("Unable to add to cart, please try again later!");
-  }
-};
+  };
+
+
   const HandleGetProducts = async () => {
     try {
-      const res = await fetch(` ${baseUrl}getAllProduct`, {
+      const res = await fetch("http://localhost:5000/getAllProduct", {
         method: "GET",
       });
 
@@ -166,7 +196,7 @@ const ProductProvider = ({ children }) => {
         setCartItems(updatedCartItems);
       } else {
         console.log("tok", token && token);
-        console.log("uid", Number(User && User?.userId));
+        console.log("uid", Number(User && User?.userid));
 
         const res = await fetch(`${baseUrl}deletecart`, {
           method: "DELETE",
@@ -175,7 +205,7 @@ const ProductProvider = ({ children }) => {
             Authorization: `Bearer ${token && token}`,
           },
           body: JSON.stringify({
-            userid: Number(User && User?.userId),
+            userid: Number(User && User?.userid),
             productid: Number(prod?.id),
           }),
         });
@@ -227,7 +257,7 @@ const ProductProvider = ({ children }) => {
         console.log("Update......");
 
         console.log("tok", token && token);
-        console.log("uid", Number(User && User?.userId));
+        console.log("uid", Number(User && User?.userid));
 
         const res = await fetch(`${baseUrl}updatecart`, {
           method: "PATCH",
@@ -236,7 +266,7 @@ const ProductProvider = ({ children }) => {
             Authorization: `Bearer ${token && token}`,
           },
           body: JSON.stringify({
-            userid: Number(User && User?.userId),
+            userid: Number(User && User?.userid),
             productid: Number(prod?.id),
             color: prod?.color,
             size: prod?.size,
@@ -265,6 +295,8 @@ const ProductProvider = ({ children }) => {
         HandleDeleteCart,
         HandleGetProducts,
         HandleAddTCart,
+        HandleGetPurchased,
+        purchasedItems,
         productData,
         cartItems,
         cartCount,
@@ -276,7 +308,7 @@ const ProductProvider = ({ children }) => {
         setProductData,
         getLocalData,
         token,
-        User,
+        User
       }}
     >
       {children}
